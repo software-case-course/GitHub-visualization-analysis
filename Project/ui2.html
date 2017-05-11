@@ -33,6 +33,7 @@
        <script src="js/Chart.js"></script>
        <script src="js/Chart.min.js"></script>
        <script src="js/utils.js"></script>
+       <link href="css/animation.css" type="text/css" rel="stylesheet" />
        
        <style type="text/css">
        	#navbar-top,#navbar-sec{
@@ -185,6 +186,28 @@
     			</a>
 			</div>
 		</div>
+		<!--
+        	作者：1539932670@qq.com
+        	时间：2017-05-11
+        	描述：创建模态框，用于提示加载信息
+        -->
+		<div class="modal fade" id="loading-tip" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class="modal-header"></div>
+						<div id="preloader">
+                			<span></span>
+                			<span></span>
+                			<span></span>
+                			<span></span>
+                			<span></span>
+                		</div>
+                		<div class="modal-footer"></div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</body>
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -218,13 +241,38 @@
 					$("#navigation-group .active").removeClass("active");
 					$(item).addClass("active");
 					$("#myCarousel").carousel("pause");
+					popup_modal();
+					
+					//以后在下面补充加载后台服务器数据的代码
+					
+					//加载完数据后消除模态框
 				});
 				else
 				if(index>3)//下拉菜单按钮的点击事件
 				{
-					
+					switch(index)
+					{
+						case 4:break;//用户活跃度
+						case 5:break;//工作时段
+					}
 				}
 			});
+		}
+		//弹出模态框
+		function popup_modal(){
+			var body_height=$("body").height();
+			var modal_height=$("#loading-tip .modal-dialog").height();
+			var modal_top=(body_height-modal_height)/2;
+			
+			//加载动画居中
+			var modal_width=$("#loading-tip .modal-dialog").width();
+			var preloader_width=$("#preloader").width();
+			var preloader_left=(modal_width-preloader_width)/2;
+			$("#preloader").css({"left":preloader_left});
+			$("#loading-tip .modal-header").css("border-bottom","none");
+			$("#loading-tip .modal-footer").css("border-top","none");
+			//模态框居中
+			$("#loading-tip").css("top",modal_top).modal("show");
 		}
 		
 		function drawChart()
