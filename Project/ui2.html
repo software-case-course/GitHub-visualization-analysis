@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!--
+        	作者：1539932670@qq.com
+        	时间：2017-04-23
+        	描述：引入jquery库
+        -->
+		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+		<!--
+        	作者：1539932670@qq.com
+        	时间：2017-04-23
+        	描述：引入bootstrap核心js文件
+        -->
+		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<!--
+        	作者：1539932670@qq.com
+        	时间：2017-04-23
+        	描述：引入bootstrap核心css文件
+        -->
+		<link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+		
+		<!--
+        	作者：1539932670@qq.com
+        	时间：2017-04-24
+        	描述：css样式
+       -->
+       <script src="js/Chart.bundle.js"></script>
+       <script src="js/Chart.bundle.min.js"></script>
+       <script src="js/Chart.js"></script>
+       <script src="js/Chart.min.js"></script>
+       <script src="js/utils.js"></script>
+       
+       <style type="text/css">
+       	#navbar-top,#navbar-sec{
+       		margin:0;
+       		margin-bottom: 0;
+       		border-radius: 0;
+       	}
+       	#navbar-sec ul li{
+       		float: left;
+       	}
+       	#main-panel{
+       		padding: 2%;
+       		margin-left:2%;
+       		margin-right:2%;
+       		margin-bottom:2%;
+       		margin-top: 2%;
+       		border:1px solid gainsboro;
+       		border-radius: 4px;
+       	}
+       	/*设置内容物居中*/
+       	.align-center{
+       		display: table;
+       		width: auto;
+       		margin-left: auto;
+       		margin-right: auto;
+       	}
+       	#navigation-group> li{
+       		border-right: 1px solid gainsboro;
+       	}
+       	/*给菜单按钮添加动画效果，应用在所有属性上，duration=0.2s*/
+       	.dropdown-toggle{
+       		padding: 15px;
+       		box-shadow: none;
+       		border: none;
+       		color: #555;
+       		-webkit-transition: all .2s;
+       		-ms-transition: all .2s;
+       	}
+       	/*鼠标覆盖时修改背景颜色*/
+       	.dropdown-toggle:hover{
+       		background-color: gainsboro;
+       	}
+       	.dropdown-menu{
+       		display: none;
+       		top: 100%;
+       		left: 0px;
+       		float: left;
+       		z-index: 1000;
+       		padding: 0;
+       		margin: 0;
+       		border: none;
+       	}
+       	.dropdown-menu li{
+       		width: 100%;
+       	}
+       	.dropdown-menu li>a{
+       		padding: 15px;
+       	}
+       	/*添加动画效果，同上*/
+       	#lang-leaderboard,#geo-distribution,#lang-trend{
+       		-webkit-transition: all .2s;
+       		-ms-transition: all .2s;
+       	}
+       	#lang-leaderboard:hover,#geo-distribution:hover,#lang-trend:hover{
+       		background-color: gainsboro;
+       	}
+       </style>
+	</head>
+	<body>
+		<nav id="navbar-surrounding" class="navbar navbar-fixed-top">
+			<nav id="navbar-top" class="navbar navbar-inverse">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-sub-btn" aria-expanded="false" aria-controls="navbar">
+            				<span class="sr-only">Toggle navigation</span>
+            				<span class="icon-bar"></span>
+            				<span class="icon-bar"></span>
+            				<span class="icon-bar"></span>
+          				</button>
+						<a class="navbar-brand" href="#">Github可视化分析</a>
+					</div>
+					<div id="navbar-sub-btn" class="navbar-collapse collapse">
+						<ul class="nav navbar-nav">
+							<li class="active">
+								<a href="#">personal blog</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+			<nav id="navbar-sec" class="navbar navbar-default">
+				<div class="container-fluid align-center">
+					<ul id="navigation-group" class="nav navbar-nav">
+						<li class="active" id="lang-leaderboard">
+							<a href="#">语言排行</a>
+						</li>
+						<li id="geo-distribution">
+							<a href="#">地域分布</a>
+						</li>
+						<li id="lang-trend">
+							<a href="#">语言趋势</a>
+						</li>
+						<li>
+							<div id="dropdown" class="btn-group">
+								<div class="dropdown-toggle">用户分析<span class="caret"></span></div>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="#">用户活跃度</a>
+									</li>
+									<li>
+										<a href="#">工作时段</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</nav>
+		<div class="container-fluid" id="main-panel">
+			<div id="myCarousel" class="carousel slide">
+    			<!-- 轮播（Carousel）指标 -->
+    			<ol class="carousel-indicators">
+       				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+       				<li data-target="#myCarousel" data-slide-to="1"></li>
+       				<li data-target="#myCarousel" data-slide-to="2"></li>
+       				<li data-target="#myCarousel" data-slide-to="3"></li>
+    			</ol>   
+    			<!-- 轮播（Carousel）项目 -->
+    			<div class="carousel-inner">
+       				<div class="item active">
+           				<canvas id="myChart" alt="First slide">
+       				</div>
+       				<div class="item">
+           				<canvas alt="Second slide">
+       				</div>
+       				<div class="item">
+           				<canvas alt="Third slide">
+       				</div>
+        			<div class="item">
+        				<canvas alt="Fourth slide" />
+        			</div>
+    			</div>
+    			<!-- 轮播（Carousel）导航 -->
+   				<a class="carousel-control left" href="#myCarousel" 
+       				data-slide="prev">&lsaquo;
+   				</a>
+   				<a class="carousel-control right" href="#myCarousel" 
+   					data-slide="next">&rsaquo;
+    			</a>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var margin_t=$("#main-panel").css("margin-top");
+			var nav_margin_t=$("#navbar-surrounding").css("height");
+			var total_margin_t=parseFloat(margin_t)+parseFloat(nav_margin_t);
+			$("#main-panel").css("margin-top",total_margin_t);
+			$("#myCarousel").carousel("pause");
+			$("#myCarousel>a").css("display","none");
+			addNavigationBarControl();
+			drawChart();
+			
+			//鼠标覆盖，下拉菜单淡入
+			$("#dropdown").mouseenter(function(){
+				var dropdown_menu=$("#dropdown .dropdown-menu");
+				dropdown_menu.fadeIn(200);
+			});
+			//鼠标离开，下拉菜单淡出
+			$("#dropdown").mouseleave(function(){
+				var dropdown_menu=$("#dropdown .dropdown-menu");
+				dropdown_menu.fadeOut(200);
+			});
+		});
+		
+		//一下函数添加导航栏的控制功能
+		function addNavigationBarControl(){
+			$("#navigation-group li").each(function(index,item){
+				if(index<3)
+				$(item).click(function(){
+					$("#myCarousel").carousel(index);
+					$("#navigation-group .active").removeClass("active");
+					$(item).addClass("active");
+					$("#myCarousel").carousel("pause");
+				});
+				else
+				if(index>3)//下拉菜单按钮的点击事件
+				{
+					
+				}
+			});
+		}
+		
+		function drawChart()
+   		{
+        var chartData = {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [{
+                type: 'line',
+                label: 'Dataset 1',
+                borderColor: window.chartColors.blue,
+                borderWidth: 2,
+                fill: false,
+                data: [
+                    randomScalingFactor(), 
+                    randomScalingFactor(), 
+                    randomScalingFactor(), 
+                    randomScalingFactor(), 
+                    randomScalingFactor(), 
+                    randomScalingFactor(), 
+                    randomScalingFactor()
+                ]
+            }, {
+                type: 'bar',
+                label: 'Dataset 2',
+                backgroundColor: window.chartColors.red,
+                data: [
+                    randomScalingFactor(), 
+                    randomScalingFactor(), 
+                    randomScalingFactor(), 
+                    randomScalingFactor(), 
+                    randomScalingFactor(), 
+                    randomScalingFactor(), 
+                    randomScalingFactor()
+                ],
+                borderColor: 'white',
+                borderWidth: 2
+            }, {
+                type: 'bar',
+                label: 'Dataset 3',
+                backgroundColor: window.chartColors.green,
+                data: [
+                    randomScalingFactor(), 
+                    randomScalingFactor(), 
+                    randomScalingFactor(), 
+                    randomScalingFactor(), 
+                    randomScalingFactor(), 
+                    randomScalingFactor(), 
+                    randomScalingFactor()
+                ]
+            }]
+
+        };
+            var ctx = document.getElementById("myChart").getContext("2d");
+            var myMixedChart = new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text: 'Chart.js Combo Bar Line Chart'
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: true
+                    }
+                }
+            });
+        };
+	</script>
+</html>
