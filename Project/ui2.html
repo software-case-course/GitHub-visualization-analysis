@@ -35,6 +35,13 @@
        <script src="js/utils.js"></script>
        <link href="css/animation.css" type="text/css" rel="stylesheet" />
        
+       <!--
+       	作者：1539932670@qq.com
+       	时间：2017-05-15
+       	描述：加入bmob支持
+       -->
+       <script src="js/bmob-min.js" type="text/javascript"></script>
+       <script src="js/data_loader.js"></script>
        <style type="text/css">
        	#navbar-top,#navbar-sec{
        		margin:0;
@@ -211,14 +218,23 @@
 	</body>
 	<script type="text/javascript">
 		$(document).ready(function(){
+			/**
+			 * 初始化bmob组件
+			 */
+			Bmob.initialize("960affa50d4201a8b8e8602770aea54f", "d531e0227fadfbe2d9a20d7b590f1ed0");
+			get_lang_rank();
+			/**
+			 * 对其他组件执行初始化工作
+			 */
 			var margin_t=$("#main-panel").css("margin-top");
 			var nav_margin_t=$("#navbar-surrounding").css("height");
 			var total_margin_t=parseFloat(margin_t)+parseFloat(nav_margin_t);
 			$("#main-panel").css("margin-top",total_margin_t);
 			$("#myCarousel").carousel("pause");
-			$("#myCarousel>a").css("display","none");
+			$("#myCarousel .carousel-control").css("display","none");
+			$("#myCarousel .carousel-indicators").css("display","none");
 			addNavigationBarControl();
-			drawChart();
+//			drawChart();
 			
 			//鼠标覆盖，下拉菜单淡入
 			$("#dropdown").mouseenter(function(){
@@ -275,72 +291,77 @@
 			$("#loading-tip").css("top",modal_top).modal("show");
 		}
 		
-		function drawChart()
-   		{
-        var chartData = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
-            datasets: [{
-                type: 'line',
-                label: 'Dataset 1',
-                borderColor: window.chartColors.blue,
-                borderWidth: 2,
-                fill: false,
-                data: [
-                    randomScalingFactor(), 
-                    randomScalingFactor(), 
-                    randomScalingFactor(), 
-                    randomScalingFactor(), 
-                    randomScalingFactor(), 
-                    randomScalingFactor(), 
-                    randomScalingFactor()
-                ]
-            }, {
-                type: 'bar',
-                label: 'Dataset 2',
-                backgroundColor: window.chartColors.red,
-                data: [
-                    randomScalingFactor(), 
-                    randomScalingFactor(), 
-                    randomScalingFactor(), 
-                    randomScalingFactor(), 
-                    randomScalingFactor(), 
-                    randomScalingFactor(), 
-                    randomScalingFactor()
-                ],
-                borderColor: 'white',
-                borderWidth: 2
-            }, {
-                type: 'bar',
-                label: 'Dataset 3',
-                backgroundColor: window.chartColors.green,
-                data: [
-                    randomScalingFactor(), 
-                    randomScalingFactor(), 
-                    randomScalingFactor(), 
-                    randomScalingFactor(), 
-                    randomScalingFactor(), 
-                    randomScalingFactor(), 
-                    randomScalingFactor()
-                ]
-            }]
-
-        };
-            var ctx = document.getElementById("myChart").getContext("2d");
-            var myMixedChart = new Chart(ctx, {
-                type: 'bar',
-                data: chartData,
-                options: {
-                    responsive: true,
-                    title: {
-                        display: true,
-                        text: 'Chart.js Combo Bar Line Chart'
-                    },
-                    tooltips: {
-                        mode: 'index',
-                        intersect: true
-                    }
-                }
-            });
-        };
+		function dismiss_modal()
+		{
+			$("#loading-tip").modal("dismiss");
+		}
+		
+//		function drawChart()
+// 		{
+//      var chartData = {
+//          labels: ["January", "February", "March", "April", "May", "June", "July"],
+//          datasets: [{
+//              type: 'line',
+//              label: 'Dataset 1',
+//              borderColor: window.chartColors.blue,
+//              borderWidth: 2,
+//              fill: false,
+//              data: [
+//                  randomScalingFactor(), 
+//                  randomScalingFactor(), 
+//                  randomScalingFactor(), 
+//                  randomScalingFactor(), 
+//                  randomScalingFactor(), 
+//                  randomScalingFactor(), 
+//                  randomScalingFactor()
+//              ]
+//          }, {
+//              type: 'bar',
+//              label: 'Dataset 2',
+//              backgroundColor: window.chartColors.red,
+//              data: [
+//                  randomScalingFactor(), 
+//                  randomScalingFactor(), 
+//                  randomScalingFactor(), 
+//                  randomScalingFactor(), 
+//                  randomScalingFactor(), 
+//                  randomScalingFactor(), 
+//                  randomScalingFactor()
+//              ],
+//              borderColor: 'white',
+//              borderWidth: 2
+//          }, {
+//              type: 'bar',
+//              label: 'Dataset 3',
+//              backgroundColor: window.chartColors.green,
+//              data: [
+//                  randomScalingFactor(), 
+//                  randomScalingFactor(), 
+//                  randomScalingFactor(), 
+//                  randomScalingFactor(), 
+//                  randomScalingFactor(), 
+//                  randomScalingFactor(), 
+//                  randomScalingFactor()
+//              ]
+//          }]
+//
+//      };
+//          var ctx = document.getElementById("myChart").getContext("2d");
+//          var myMixedChart = new Chart(ctx, {
+//              type: 'bar',
+//              data: chartData,
+//              options: {
+//                  responsive: true,
+//                  title: {
+//                      display: true,
+//                      text: 'Chart.js Combo Bar Line Chart'
+//                  },
+//                  tooltips: {
+//                      mode: 'index',
+//                      intersect: true
+//                  }
+//              }
+//          });
+//      };
 	</script>
 </html>
