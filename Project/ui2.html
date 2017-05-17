@@ -222,7 +222,6 @@
 			 * 初始化bmob组件
 			 */
 			Bmob.initialize("960affa50d4201a8b8e8602770aea54f", "d531e0227fadfbe2d9a20d7b590f1ed0");
-			get_lang_rank();
 			/**
 			 * 对其他组件执行初始化工作
 			 */
@@ -234,7 +233,7 @@
 			$("#myCarousel .carousel-control").css("display","none");
 			$("#myCarousel .carousel-indicators").css("display","none");
 			addNavigationBarControl();
-//			drawChart();
+			setup_modal();
 			
 			//鼠标覆盖，下拉菜单淡入
 			$("#dropdown").mouseenter(function(){
@@ -251,31 +250,40 @@
 		//一下函数添加导航栏的控制功能
 		function addNavigationBarControl(){
 			$("#navigation-group li").each(function(index,item){
-				if(index<3)
-				$(item).click(function(){
-					$("#myCarousel").carousel(index);
-					$("#navigation-group .active").removeClass("active");
-					$(item).addClass("active");
-					$("#myCarousel").carousel("pause");
-					popup_modal();
-					
-					//以后在下面补充加载后台服务器数据的代码
-					
-					//加载完数据后消除模态框
-				});
-				else
-				if(index>3)//下拉菜单按钮的点击事件
+				switch(index)
 				{
-					switch(index)
-					{
-						case 4:break;//用户活跃度
-						case 5:break;//工作时段
-					}
+					case 0:$(item).click(function(){
+						$("#loading-tip").modal('show');
+						$("#myCarousel").carousel(0);
+						$("#myCarousel").carousel('pause');
+						get_lang_rank();
+						$("#loading-tip").on('done',function(){$("#loading-tip").modal('hide');});
+					});break;//语言排行
+					case 1:$(item).click(function(){
+						$("#loading-tip").modal('show');
+						$("#myCarousel").carousel(1);
+						$("#myCarousel").carousel('pause');
+					});break;//地域分布
+					case 2:$(item).click(function(){
+						$("#loading-tip").modal('show');
+						$("#myCarousel").carousel(2);
+						$("#myCarousel").carousel('pause');
+					});break;//语言趋势
+					case 4:$(item).click(function(){
+						$("#loading-tip").modal('show');
+						$("#myCarousel").carousel(3);
+						$("#myCarousel").carousel('pause');
+					});break;//用户活跃度
+					case 5:$(item).click(function(){
+						$("#loading-tip").modal('show');
+						$("#myCarousel").carousel(3);
+						$("#myCarousel").carousel('pause');
+					});break;//工作时段
 				}
 			});
 		}
 		//弹出模态框
-		function popup_modal(){
+		function setup_modal(){
 			var body_height=$("body").height();
 			var modal_height=$("#loading-tip .modal-dialog").height();
 			var modal_top=(body_height-modal_height)/2;
@@ -288,12 +296,7 @@
 			$("#loading-tip .modal-header").css("border-bottom","none");
 			$("#loading-tip .modal-footer").css("border-top","none");
 			//模态框居中
-			$("#loading-tip").css("top",modal_top).modal("show");
-		}
-		
-		function dismiss_modal()
-		{
-			$("#loading-tip").modal("dismiss");
+			$("#loading-tip").css("top",modal_top);
 		}
 		
 //		function drawChart()

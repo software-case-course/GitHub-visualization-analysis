@@ -104,7 +104,8 @@ function onDataLoad()
 		bg_colorset:backgroundColorset,
 		display_mode:"bar"
 	}
-	drawChart(chartBundle);
+	drawChart(chartBundle);//根据数据画图
+	$("#loading-tip").trigger('done');//画图完成后消除模态框
 }
 
 function drawChart(chartBundle)
@@ -143,5 +144,5 @@ function drawChart(chartBundle)
                         intersect: true
                     }
                 }
-        });
+       });
 }
