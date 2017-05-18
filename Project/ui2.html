@@ -172,16 +172,18 @@
     			<!-- 轮播（Carousel）项目 -->
     			<div class="carousel-inner">
        				<div class="item active">
-           				<canvas id="myChart" alt="First slide">
+       					<input class='tgl tgl-flip' id='cb5' type='checkbox' style="position: absolute;">
+    					<label class='tgl-btn' data-tg-off='柱状图' data-tg-on='饼图' for='cb5' style="position: absolute;font-family: '微软雅黑';"></label>
+           				<canvas id="myChart" alt="First slide"></canvas>
        				</div>
        				<div class="item">
-           				<canvas alt="Second slide">
+           				<canvas alt="Second slide"></canvas>
        				</div>
        				<div class="item">
-           				<canvas alt="Third slide">
+           				<canvas alt="Third slide"></canvas>
        				</div>
         			<div class="item">
-        				<canvas alt="Fourth slide" />
+        				<canvas alt="Fourth slide"></canvas>
         			</div>
     			</div>
     			<!-- 轮播（Carousel）导航 -->
@@ -245,6 +247,10 @@
 				var dropdown_menu=$("#dropdown .dropdown-menu");
 				dropdown_menu.fadeOut(200);
 			});
+			//添加图表切换功能
+			$("#cb5").click(function(){
+				get_lang_rank(0);
+			})
 		});
 		
 		//一下函数添加导航栏的控制功能
@@ -253,29 +259,23 @@
 				switch(index)
 				{
 					case 0:$(item).click(function(){
-						$("#loading-tip").modal('show');
 						$("#myCarousel").carousel(0);
 						$("#myCarousel").carousel('pause');
-						get_lang_rank();
-						$("#loading-tip").on('done',function(){$("#loading-tip").modal('hide');});
+						get_lang_rank(0);
 					});break;//语言排行
 					case 1:$(item).click(function(){
-						$("#loading-tip").modal('show');
 						$("#myCarousel").carousel(1);
 						$("#myCarousel").carousel('pause');
 					});break;//地域分布
 					case 2:$(item).click(function(){
-						$("#loading-tip").modal('show');
 						$("#myCarousel").carousel(2);
 						$("#myCarousel").carousel('pause');
 					});break;//语言趋势
 					case 4:$(item).click(function(){
-						$("#loading-tip").modal('show');
 						$("#myCarousel").carousel(3);
 						$("#myCarousel").carousel('pause');
 					});break;//用户活跃度
 					case 5:$(item).click(function(){
-						$("#loading-tip").modal('show');
 						$("#myCarousel").carousel(3);
 						$("#myCarousel").carousel('pause');
 					});break;//工作时段
@@ -297,6 +297,10 @@
 			$("#loading-tip .modal-footer").css("border-top","none");
 			//模态框居中
 			$("#loading-tip").css("top",modal_top);
+		}
+		function addDisplaySwitch()
+		{
+			var menu
 		}
 		
 //		function drawChart()
