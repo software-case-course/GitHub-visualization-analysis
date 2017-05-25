@@ -184,15 +184,21 @@ function drawChart(chartBundle)
 		var ctx=document.getElementById("myChart").getContext('2d');
 		var myPieChart=new Chart(ctx,config);
 	}
+	//绘图完成后居中canvas
+	var chartParent=$("#myChart").closest('.tab-pane');
+	var margin_left=($(chartParent).width()-$("#myChart").width())/2;
+	$("#myChart").css('margin-left',margin_left);
+//	alert("left"+left+" "+"canvas宽度"+$("#myChart").width()+" "+"pane宽度"+$(chartParent).width());
 }
 
 function clearCanvas(canvasID)
 {
-	var chartparent=$(canvasID).closest('.item');
+	var chartparent=$(canvasID).closest('.tab-pane');
 	console.log(chartparent.children().length);
 	$("#myChart").remove();
 	var newCanvas=document.createElement('canvas');
 	newCanvas.id="myChart";
-	newCanvas.alt="First slide";
+	if($("#cb5").get(0).checked==true) $(newCanvas).addClass("canvas-style-pie");
+	else $(newCanvas).addClass("canvas-style-bar");
 	chartparent.append(newCanvas);
 }

@@ -43,13 +43,11 @@
        <script src="js/bmob-min.js" type="text/javascript"></script>
        <script src="js/data_loader.js"></script>
        <style type="text/css">
-       	#navbar-top,#navbar-sec{
+       	#navbar-top{
        		margin:0;
        		margin-bottom: 0;
        		border-radius: 0;
-       	}
-       	#navbar-sec ul li{
-       		float: left;
+       		border: none;
        	}
        	#main-panel{
        		padding: 2%;
@@ -60,6 +58,30 @@
        		border:1px solid gainsboro;
        		border-radius: 4px;
        	}
+       	/**设置标签页样式**/
+       	#navigation-group{
+       		border-bottom: none;
+       	}
+       	#navigation-group>li>div>a{
+       		background-color: #444444;
+       		height: 100%;
+       		padding: 15px;
+       		display: block;
+       		text-decoration: none;
+       		color: gainsboro;
+       		-webkit-transition: all .2s;
+       		-ms-transition: all .2s;
+       		-moz-transition: all .2s;
+       		transition: all .2s;
+       	}
+       	#navigation-group>li>div>a:hover{
+       		background-color: #333333;
+       		box-shadow: 0px 0px 5px #080808;
+       	}
+       	#navigation-group>li.active>div>a{
+       		background-color: white;
+       		color: #444444;
+       	}
        	/*设置内容物居中*/
        	.align-center{
        		display: table;
@@ -67,21 +89,20 @@
        		margin-left: auto;
        		margin-right: auto;
        	}
-       	#navigation-group> li{
-       		border-right: 1px solid gainsboro;
-       	}
        	/*给菜单按钮添加动画效果，应用在所有属性上，duration=0.2s*/
        	.dropdown-toggle{
        		padding: 15px;
        		box-shadow: none;
        		border: none;
-       		color: #555;
+       		color: ghostwhite;
+       		background-color: #444444;
        		-webkit-transition: all .2s;
        		-ms-transition: all .2s;
        	}
        	/*鼠标覆盖时修改背景颜色*/
        	.dropdown-toggle:hover{
-       		background-color: gainsboro;
+       		background-color: #333333;
+       		box-shadow: 0px -1px 5px #080808;
        	}
        	.dropdown-menu{
        		display: none;
@@ -107,41 +128,44 @@
        	#lang-leaderboard:hover,#geo-distribution:hover,#lang-trend:hover{
        		background-color: gainsboro;
        	}
+       	.canvas-style-bar{
+       		max-width: 1422px;
+       		max-height: 800px;
+       	}
+       	.canvas-style-pie{
+       		max-width: 750px;
+       		max-height: 750px;
+       	}
        </style>
 	</head>
 	<body>
-		<nav id="navbar-surrounding" class="navbar navbar-fixed-top">
-			<nav id="navbar-top" class="navbar navbar-inverse">
-				<div class="container">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-sub-btn" aria-expanded="false" aria-controls="navbar">
-            				<span class="sr-only">Toggle navigation</span>
-            				<span class="icon-bar"></span>
-            				<span class="icon-bar"></span>
-            				<span class="icon-bar"></span>
-          				</button>
-						<a class="navbar-brand" href="#">Github可视化分析</a>
-					</div>
-					<div id="navbar-sub-btn" class="navbar-collapse collapse">
-						<ul class="nav navbar-nav">
-							<li class="active">
-								<a href="#">personal blog</a>
-							</li>
-						</ul>
-					</div>
+		<nav id="navbar-top" class="navbar navbar-inverse">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-sub-btn" aria-expanded="false" aria-controls="navbar">
+           				<span class="sr-only">Toggle navigation</span>
+           				<span class="icon-bar"></span>
+           				<span class="icon-bar"></span>
+           				<span class="icon-bar"></span>
+       				</button>
+					<a class="navbar-brand" href="#">Github可视化分析</a>
 				</div>
-			</nav>
-			<nav id="navbar-sec" class="navbar navbar-default">
-				<div class="container-fluid align-center">
-					<ul id="navigation-group" class="nav navbar-nav">
-						<li class="active" id="lang-leaderboard">
-							<a href="#">语言排行</a>
+				<div id="navbar-sub-btn" class="navbar-collapse collapse">
+					<ul id="navigation-group" class="nav nav-tabs">
+						<li class="active">
+							<div>
+								<a href="#tab-lang-rank" data-toggle='tab'>语言排行</a>
+							</div>
 						</li>
-						<li id="geo-distribution">
-							<a href="#">地域分布</a>
+						<li>
+							<div>
+								<a href="#tab-geo-analysis" data-toggle='tab'>地域分布</a>
+							</div>
 						</li>
-						<li id="lang-trend">
-							<a href="#">语言趋势</a>
+						<li>
+							<div>
+								<a href="#tab-lang-trend" data-toggle='tab'>语言趋势</a>
+							</div>
 						</li>
 						<li>
 							<div id="dropdown" class="btn-group">
@@ -158,41 +182,24 @@
 						</li>
 					</ul>
 				</div>
-			</nav>
+			</div>
 		</nav>
 		<div class="container-fluid" id="main-panel">
-			<div id="myCarousel" class="carousel slide">
-    			<!-- 轮播（Carousel）指标 -->
-    			<ol class="carousel-indicators">
-       				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-       				<li data-target="#myCarousel" data-slide-to="1"></li>
-       				<li data-target="#myCarousel" data-slide-to="2"></li>
-       				<li data-target="#myCarousel" data-slide-to="3"></li>
-    			</ol>   
-    			<!-- 轮播（Carousel）项目 -->
-    			<div class="carousel-inner">
-       				<div class="item active">
-       					<input class='tgl tgl-flip' id='cb5' type='checkbox' style="position: absolute;">
-    					<label class='tgl-btn' data-tg-off='柱状图' data-tg-on='饼图' for='cb5' style="position: absolute;font-family: '微软雅黑';"></label>
-           				<canvas id="myChart" alt="First slide"></canvas>
-       				</div>
-       				<div class="item">
-           				<canvas alt="Second slide"></canvas>
-       				</div>
-       				<div class="item">
-           				<canvas alt="Third slide"></canvas>
-       				</div>
-        			<div class="item">
-        				<canvas alt="Fourth slide"></canvas>
-        			</div>
-    			</div>
-    			<!-- 轮播（Carousel）导航 -->
-   				<a class="carousel-control left" href="#myCarousel" 
-       				data-slide="prev">&lsaquo;
-   				</a>
-   				<a class="carousel-control right" href="#myCarousel" 
-   					data-slide="next">&rsaquo;
-    			</a>
+			<div class="tab-content">
+				<div class="tab-pane fade in active" id="tab-lang-rank">
+					<input class='tgl tgl-flip' id='cb5' type='checkbox' style="position: absolute;">
+    				<label class='tgl-btn' data-tg-off='柱状图' data-tg-on='饼图' for='cb5' style="position: absolute;font-family: '微软雅黑';"></label>
+					<canvas id="myChart"></canvas>
+				</div>
+				<div class="tab-pane fade" id="tab-geo-analysis">
+					<canvas id="myChart" style="background-color: #1769FF;"></canvas>
+				</div>
+				<div class="tab-pane fade" id="tab-lang-trend">
+					<canvas id="myChart2" style="background-color: #1DC7EA"></canvas>
+				</div>
+				<div class="tab-pane fade" id="tab-user-alys">
+					<canvas id="myChart3" style="background-color: #222222;"></canvas>
+				</div>
 			</div>
 		</div>
 		<!--
@@ -227,10 +234,10 @@
 			/**
 			 * 对其他组件执行初始化工作
 			 */
-			var margin_t=$("#main-panel").css("margin-top");
-			var nav_margin_t=$("#navbar-surrounding").css("height");
-			var total_margin_t=parseFloat(margin_t)+parseFloat(nav_margin_t);
-			$("#main-panel").css("margin-top",total_margin_t);
+//			var margin_t=$("#main-panel").css("margin-top");
+//			var nav_margin_t=$("#navbar-surrounding").css("height");
+//			var total_margin_t=parseFloat(margin_t)+parseFloat(nav_margin_t);
+//			$("#main-panel").css("margin-top",total_margin_t);
 			$("#myCarousel").carousel("pause");
 			$("#myCarousel .carousel-control").css("display","none");
 			$("#myCarousel .carousel-indicators").css("display","none");
@@ -250,6 +257,13 @@
 			//添加图表切换功能
 			$("#cb5").click(function(){
 				get_lang_rank(0);
+			})
+			
+			$(window).resize(function(){
+				console.log("窗口大小调整")
+				var canvasWidth=$("#tab-lang-rank").width();
+				var canvasHeight=$("#tab-lang-rank").height();
+				$("#myChart").css({"width":canvasWidth,"height":canvasHeight});
 			})
 		});
 		
@@ -297,12 +311,7 @@
 			$("#loading-tip .modal-footer").css("border-top","none");
 			//模态框居中
 			$("#loading-tip").css("top",modal_top);
-		}
-		function addDisplaySwitch()
-		{
-			var menu
-		}
-		
+		}	
 //		function drawChart()
 // 		{
 //      var chartData = {
