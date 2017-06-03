@@ -42,21 +42,33 @@
        -->
        <script src="js/bmob-min.js" type="text/javascript"></script>
        <script src="js/data_loader.js"></script>
+       
+       <!--
+       	作者：1539932670@qq.com
+       	时间：2017-05-31
+       	描述：加入echart插件支持
+       -->
+       <script src="js/echarts.min.js"></script>
+       <script src="js/world.js"></script>
+       
        <style type="text/css">
+       body{
+       	background-color: #444444;
+       }
        	#navbar-top{
        		margin:0;
-       		margin-bottom: 0;
+/*       		margin-bottom: 20px;*/
        		border-radius: 0;
        		border: none;
+       		box-shadow: 0 0 10px #080808;
        	}
        	#main-panel{
-       		padding: 2%;
-       		margin-left:2%;
-       		margin-right:2%;
-       		margin-bottom:2%;
-       		margin-top: 2%;
-       		border:1px solid gainsboro;
-       		border-radius: 4px;
+       		border-left: 1px solid gainsboro;
+       		border-right: 1px solid gainsboro;
+       		background-color: white;
+       		padding-left: 5%;
+       		padding-right: 5%;
+       		padding-top: 2%;
        	}
        	/**设置标签页样式**/
        	#navigation-group{
@@ -76,7 +88,6 @@
        	}
        	#navigation-group>li>div>a:hover{
        		background-color: #333333;
-       		box-shadow: 0px 0px 5px #080808;
        	}
        	#navigation-group>li.active>div>a{
        		background-color: white;
@@ -136,10 +147,54 @@
        		max-width: 750px;
        		max-height: 750px;
        	}
+       	.canvas-style-radar{
+       		max-width: 750px;
+       		max-height: 750px;
+       		margin-left: auto;
+       		margin-right: auto;
+       		width: auto;
+       	}
+       	.canvas-style-line{
+       		max-width: 1422px;
+       		max-height: 750px;
+       		width: auto;
+       		margin-left: auto;
+       		margin-right: auto;
+       	}
+       	.tab-indicator{
+       		transition: all .3s;
+       		width: 100%;
+       		position: absolute;
+       		left: 0px;
+       		top: 0px;
+       		height: 0px;
+       		background-color: #FF9500;
+       	}
+       	#navigation-group>li>div:hover .tab-indicator{
+       		height: 5px;
+       	}
+       	#navigation-group>li.active>div .tab-indicator{
+       		height: 5px;
+       	}
+       	#map-container{
+       		width: auto;
+       		max-width: 1422px;
+       		max-height: 750px;
+       		margin-left: auto;
+       		margin-right: auto;
+       		border: 1px solid gainsboro;
+       	}
+       	h1,h2,p{
+       		margin-bottom: 40px;
+       	}
+       	p{
+       		font-size: 18px;
+       		line-height: 35px;
+       	}
        </style>
 	</head>
 	<body>
-		<nav id="navbar-top" class="navbar navbar-inverse">
+		<nav id="navbar-top" class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-sub-btn" aria-expanded="false" aria-controls="navbar">
@@ -154,17 +209,26 @@
 					<ul id="navigation-group" class="nav nav-tabs">
 						<li class="active">
 							<div>
+								<span class="tab-indicator"></span>
 								<a href="#tab-lang-rank" data-toggle='tab'>语言排行</a>
 							</div>
 						</li>
 						<li>
 							<div>
+								<span class="tab-indicator"></span>
 								<a href="#tab-geo-analysis" data-toggle='tab'>地域分布</a>
 							</div>
 						</li>
 						<li>
 							<div>
+								<span class="tab-indicator"></span>
 								<a href="#tab-lang-trend" data-toggle='tab'>语言趋势</a>
+							</div>
+						</li>
+						<li>
+							<div>
+								<span class="tab-indicator"></span>
+								<a href="#tab-lang-analysis" data-toggle='tab'>语言分析</a>
 							</div>
 						</li>
 						<li>
@@ -184,21 +248,65 @@
 				</div>
 			</div>
 		</nav>
-		<div class="container-fluid" id="main-panel">
-			<div class="tab-content">
+		<div class="container" id="main-panel">
+			<div class="tab-content" style="width: 100%;">
 				<div class="tab-pane fade in active" id="tab-lang-rank">
+					<h1>语言排行</h4>
+					<h2>简介</h2>
+					<p>Github上面的语言排行主要有两大方向，一是统计各种语言在Github上的仓库占比来确定排行。<br />
+						二是统计用过这种语言的用户占比来确定排行。<br />
+						下面的图例分别显示了占比情况以及排行。<br />
+					</p>
+					<h2>占比情况</h2>
 					<input class='tgl tgl-flip' id='cb5' type='checkbox' style="position: absolute;">
     				<label class='tgl-btn' data-tg-off='柱状图' data-tg-on='饼图' for='cb5' style="position: absolute;font-family: '微软雅黑';"></label>
 					<canvas id="myChart"></canvas>
 				</div>
 				<div class="tab-pane fade" id="tab-geo-analysis">
-					<canvas id="myChart" style="background-color: #1769FF;"></canvas>
+					<h1>地域分布</h1>
+					<h2>简介</h2>
+					<p>
+						地域分布是根据Github上每个用户登记的个人地址，<br />
+						结合在语言排行中统计的各种语言的占比来划分每种语言在各个国家（地区）的分布情况的。<br />
+					</p>
+					<h2>分布情况</h2>
+					<div id="map-container"></div>
 				</div>
 				<div class="tab-pane fade" id="tab-lang-trend">
-					<canvas id="myChart2" style="background-color: #1DC7EA"></canvas>
+					<h1>语言趋势</h1>
+					<h2>简介</h2>
+					<p>
+						语言趋势是我们根据Github每个时期的统计数据，<br />
+						来描绘每种语言的发展趋势的。<br />
+					</p>
+					<h2>趋势情况</h2>
+					<div class="table-responsive">
+						<table class="table">
+							<caption>世界语言发展趋势</caption>
+							<thead>
+								<tr>
+									<th>语言</th>
+									<th>世界排名</th>
+									<th>趋势</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<canvas id="myChart-lang-trend"></canvas>
+				</div>
+				<div class="tab-pane fade" id="tab-lang-analysis">
+					<h1>语言分析</h1>
+					<h2>简介</h2>
+					<p>
+						语言分析是我们结合各种子模块统计的数据，<br />
+						从5大方面：用户数，用户活跃度，平台相关性，上手难度，潜力，<br />
+						来评价每种编程语言。<br />
+					</p>
+					<h2>语言战力图</h2>
+					<canvas id="myChart-lang-analysis" class="canvas-style-radar"></canvas>
 				</div>
 				<div class="tab-pane fade" id="tab-user-alys">
-					<canvas id="myChart3" style="background-color: #222222;"></canvas>
+					<canvas id="myChart4" style="background-color: #222222;"></canvas>
 				</div>
 			</div>
 		</div>
@@ -238,10 +346,9 @@
 //			var nav_margin_t=$("#navbar-surrounding").css("height");
 //			var total_margin_t=parseFloat(margin_t)+parseFloat(nav_margin_t);
 //			$("#main-panel").css("margin-top",total_margin_t);
-			$("#myCarousel").carousel("pause");
-			$("#myCarousel .carousel-control").css("display","none");
-			$("#myCarousel .carousel-indicators").css("display","none");
 			addNavigationBarControl();
+			var margin_top=$("#navbar-top").css('height');
+			$("#main-panel").css('margin-top',margin_top);
 			setup_modal();
 			
 			//鼠标覆盖，下拉菜单淡入
@@ -258,13 +365,7 @@
 			$("#cb5").click(function(){
 				get_lang_rank(0);
 			})
-			
-			$(window).resize(function(){
-				console.log("窗口大小调整")
-				var canvasWidth=$("#tab-lang-rank").width();
-				var canvasHeight=$("#tab-lang-rank").height();
-				$("#myChart").css({"width":canvasWidth,"height":canvasHeight});
-			})
+			drawMap();
 		});
 		
 		//一下函数添加导航栏的控制功能
@@ -273,26 +374,26 @@
 				switch(index)
 				{
 					case 0:$(item).click(function(){
-						$("#myCarousel").carousel(0);
-						$("#myCarousel").carousel('pause');
+						console.log('语言排行')
 						get_lang_rank(0);
 					});break;//语言排行
 					case 1:$(item).click(function(){
-						$("#myCarousel").carousel(1);
-						$("#myCarousel").carousel('pause');
+						console.log('地域分布')
 					});break;//地域分布
 					case 2:$(item).click(function(){
-						$("#myCarousel").carousel(2);
-						$("#myCarousel").carousel('pause');
+						console.log('语言趋势')
+						drawLangTrend(null);
 					});break;//语言趋势
-					case 4:$(item).click(function(){
-						$("#myCarousel").carousel(3);
-						$("#myCarousel").carousel('pause');
-					});break;//用户活跃度
+					case 3:$(item).click(function(){
+						console.log('语言分析')
+						drawRadar(null);
+					});break;//语言分析
 					case 5:$(item).click(function(){
-						$("#myCarousel").carousel(3);
-						$("#myCarousel").carousel('pause');
-					});break;//工作时段
+						console.log('活跃度')
+					});break;//用户活跃度
+					case 6:$(item).click(function(){
+						console.log('工作时段')
+					});break;//用户工作时段
 				}
 			});
 		}
@@ -312,72 +413,5 @@
 			//模态框居中
 			$("#loading-tip").css("top",modal_top);
 		}	
-//		function drawChart()
-// 		{
-//      var chartData = {
-//          labels: ["January", "February", "March", "April", "May", "June", "July"],
-//          datasets: [{
-//              type: 'line',
-//              label: 'Dataset 1',
-//              borderColor: window.chartColors.blue,
-//              borderWidth: 2,
-//              fill: false,
-//              data: [
-//                  randomScalingFactor(), 
-//                  randomScalingFactor(), 
-//                  randomScalingFactor(), 
-//                  randomScalingFactor(), 
-//                  randomScalingFactor(), 
-//                  randomScalingFactor(), 
-//                  randomScalingFactor()
-//              ]
-//          }, {
-//              type: 'bar',
-//              label: 'Dataset 2',
-//              backgroundColor: window.chartColors.red,
-//              data: [
-//                  randomScalingFactor(), 
-//                  randomScalingFactor(), 
-//                  randomScalingFactor(), 
-//                  randomScalingFactor(), 
-//                  randomScalingFactor(), 
-//                  randomScalingFactor(), 
-//                  randomScalingFactor()
-//              ],
-//              borderColor: 'white',
-//              borderWidth: 2
-//          }, {
-//              type: 'bar',
-//              label: 'Dataset 3',
-//              backgroundColor: window.chartColors.green,
-//              data: [
-//                  randomScalingFactor(), 
-//                  randomScalingFactor(), 
-//                  randomScalingFactor(), 
-//                  randomScalingFactor(), 
-//                  randomScalingFactor(), 
-//                  randomScalingFactor(), 
-//                  randomScalingFactor()
-//              ]
-//          }]
-//
-//      };
-//          var ctx = document.getElementById("myChart").getContext("2d");
-//          var myMixedChart = new Chart(ctx, {
-//              type: 'bar',
-//              data: chartData,
-//              options: {
-//                  responsive: true,
-//                  title: {
-//                      display: true,
-//                      text: 'Chart.js Combo Bar Line Chart'
-//                  },
-//                  tooltips: {
-//                      mode: 'index',
-//                      intersect: true
-//                  }
-//              }
-//          });
-//      };
 	</script>
 </html>
