@@ -2231,3 +2231,8 @@ function drawLangTrend(chartBundle)
         };
         var myChart=new Chart(document.getElementById('myChart-lang-trend'),config);
 }
+/*****************下面是用户分析的绘图函数***************************/
+function drawLiveness(chartBundle)
+{
+	
+}

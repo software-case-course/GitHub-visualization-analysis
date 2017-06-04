@@ -69,6 +69,7 @@
        		padding-left: 5%;
        		padding-right: 5%;
        		padding-top: 2%;
+       		padding-bottom: 2%;
        	}
        	/**设置标签页样式**/
        	#navigation-group{
@@ -232,16 +233,9 @@
 							</div>
 						</li>
 						<li>
-							<div id="dropdown" class="btn-group">
-								<div class="dropdown-toggle">用户分析<span class="caret"></span></div>
-								<ul class="dropdown-menu">
-									<li>
-										<a href="#">用户活跃度</a>
-									</li>
-									<li>
-										<a href="#">工作时段</a>
-									</li>
-								</ul>
+							<div>
+								<span class="tab-indicator"></span>
+								<a href="#tab-user-analysis" data-toggle='tab'>用户分析</a>
 							</div>
 						</li>
 					</ul>
@@ -282,7 +276,7 @@
 					<h2>趋势情况</h2>
 					<div class="table-responsive">
 						<table class="table">
-							<caption>世界语言发展趋势</caption>
+							<caption style="text-align: center;font-size: 18px;">世界语言发展趋势</caption>
 							<thead>
 								<tr>
 									<th>语言</th>
@@ -305,8 +299,18 @@
 					<h2>语言战力图</h2>
 					<canvas id="myChart-lang-analysis" class="canvas-style-radar"></canvas>
 				</div>
-				<div class="tab-pane fade" id="tab-user-alys">
-					<canvas id="myChart4" style="background-color: #222222;"></canvas>
+				<div class="tab-pane fade" id="tab-user-analysis">
+					<h1>用户分析</h1>
+					<h2>简介</h2>
+					<p>
+						分析Github上面的用户行为主要分为两个方面：<br />
+						一是用户活跃度分析，根据Github上大部分项目的提交（commit）频率来评价一种语言的用户活跃度<br />
+						二是用户工作时段分析，根据Github上大部分项目的提交（commit）时间来评价一种语言的用户大概喜欢在什么时段工作<br />
+					</p>
+					<h2>用户活跃度分析</h2>
+					<canvas id="myChart-liveness-analysis"></canvas>
+					<h2>用户工作时段分析</h2>
+					<canvas id="myChart-worktime-analysis"></canvas>
 				</div>
 			</div>
 		</div>
