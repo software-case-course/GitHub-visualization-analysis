@@ -1,9 +1,9 @@
 ﻿# GitHub-visualization-analysis
 <b>Github的可视化分析</b><br/>
 
-<b>域名审核中</b><br/>
-<b>现在暂时挂载在我的github账号上<a>https://pigpigautumn.github.io<a/>,由于引用了cdn的bootstrap库，在国外可能会被认证为不安全，浏览器设置一下相信我这个网页就行了
-<b/>
+<b>网站地址：<a>http://millteapig.cn<a/><b/>
+<b>部分浏览器可能会提示网站来源不安全，那是因为我的网站没备案，域名没实名认证吧<b/>
+
 <dl>
 <dt>组长：</dt>
 <dd>黄嘉琪<a href="https://github.com/PigPigAutumn">@PigPigAutumn</a></dd>
