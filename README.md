@@ -3,6 +3,7 @@
 
 <b>网站地址：<a>http://www.millteapig.cn<a/><b/>
 <b>部分浏览器可能会提示网站来源不安全，那是因为我的网站没备案，域名没实名认证吧<b/>
+<b>如果上面的网站访问不了可以访问<a>https://pigpigautumn.github.io<a/><b/>
 
 <dl>
 <dt>组长：</dt>
