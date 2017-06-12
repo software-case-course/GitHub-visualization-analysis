@@ -42,7 +42,10 @@
        -->
        <script src="js/bmob-min.js" type="text/javascript"></script>
        <script src="js/data_loader.js"></script>
-       
+       <script src="js/script_lang_rank.js"></script>
+       <script src="js/script_geo_spread.js"></script>
+       <script src="js/script_lang_trend.js"></script>
+       <script src="js/script_lang_analysis.js"></script>
        <!--
        	作者：1539932670@qq.com
        	时间：2017-05-31
@@ -264,6 +267,18 @@
 						结合在语言排行中统计的各种语言的占比来划分每种语言在各个国家（地区）的分布情况的。<br />
 					</p>
 					<h2>分布情况</h2>
+					<select style="padding: 8px;border-color: gainsboro;">
+						<option value="Java">Java</option>
+						<option value="JavaScript">JavaScript</option>
+						<option value="Html">Html</option>
+						<option value="CSS">CSS</option>
+						<option value="Python">Python</option>
+						<option value="C/C++">C/C++</option>
+						<option value="Ruby">Ruby</option>
+						<option value="R">R</option>
+						<option value="Objective-C">Objective-C</option>
+						<option value="Swift">Swift</option>
+					</select>
 					<div id="map-container"></div>
 				</div>
 				<div class="tab-pane fade" id="tab-lang-trend">
@@ -367,9 +382,11 @@
 			});
 			//添加图表切换功能
 			$("#cb5").click(function(){
-				get_lang_rank(0);
+//				get_lang_rank(0);
+				lang_rank();
 			})
 			drawMap();
+			pack_country_data();
 		});
 		
 		//一下函数添加导航栏的控制功能
@@ -379,25 +396,26 @@
 				{
 					case 0:$(item).click(function(){
 						console.log('语言排行')
-						get_lang_rank(0);
+//						get_lang_rank(0);
+						lang_rank();
 					});break;//语言排行
 					case 1:$(item).click(function(){
 						console.log('地域分布')
 					});break;//地域分布
 					case 2:$(item).click(function(){
 						console.log('语言趋势')
-						drawLangTrend(null);
+//						drawLangTrend(null);
+						lang_trend();
 					});break;//语言趋势
 					case 3:$(item).click(function(){
 						console.log('语言分析')
-						drawRadar(null);
+//						drawRadar(null);
+						lang_analysis();
 					});break;//语言分析
-					case 5:$(item).click(function(){
-						console.log('活跃度')
-					});break;//用户活跃度
-					case 6:$(item).click(function(){
-						console.log('工作时段')
-					});break;//用户工作时段
+					case 4:$(item).click(function(){
+						console.log('用户分析');
+						drawLiveness(null);
+					});break;
 				}
 			});
 		}
