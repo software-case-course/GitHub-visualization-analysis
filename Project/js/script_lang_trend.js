@@ -51,44 +51,43 @@ function lang_trend() {
 //			}
 //		}]
 //	};
-	var data_url = '';
-	var lang_labels = new Array();
-	var trend_data = new Array();
-	$.getJSON(data_url, function(result) {
-		$.each(result, function(key, item) {
-			switch(key) {
-				case "data":
-					$.each(item, function(index) {
-						lang_labels.push(item[index].lang_name);
-						var arr = new Array();
-						$.each(item[index].trend, function(i, j) {
-							arr.push(j);
-						});
-						trend_data.push(arr);
-					});
-
-					var lineChartDataset = new Array();
-					$.each(lang_labels, function(index) {
-						var line_item = {
-							label: lang_labels[index],
-							backgroundColor: lineColor[index],
-							borderColor: lineColor[index],
-							data: trend_data[index],
-							fill: false
-						};
-						lineChartDataset.push(line_item);
-					});
-
-					var chartBundle = {
-						labels: lang_labels,
-						datasets: lineChartDataset
-					};
-
-					drawTrend(chartBundle);
-
-					console.log(chartBundle.datasets.toString());
-			}
-		});
+	$("#loading-tip").modal('show');
+	$.ajax({
+		type:"GET",
+		url:"http://139.199.196.203/checkmysql2.php?callback=?",
+		dataType:'JSONP',
+		success:function(data){
+			var month_labels=new Array();
+			var lang_nameSets=new Array();
+			var trend_arr=new Array();
+			$.each(data, function(key,item) {
+				lang_nameSets.push(key);
+				var trend_item=new Array();
+				$.each(item, function(index,value) {
+					if(month_labels.indexOf(index)==-1) month_labels.push(index);
+					trend_item.push(value);
+				});
+				trend_arr.push(trend_item);
+			});
+			
+			var lineChartDataset=new Array();
+			$.each(lang_nameSets, function(index,value) {
+				var item={
+					label:value,
+					fill:false,
+					backgroundColor:lineColor[index],
+					borderColor:lineColor[index],
+					data:trend_arr[index]
+				}
+				lineChartDataset.push(item);
+			});
+			var chartBundle={
+				x_labels:month_labels,
+				datasets:lineChartDataset
+			};
+			drawTrend(chartBundle);
+			$("#loading-tip").modal('hide');
+		}
 	});
 }
 
@@ -99,7 +98,7 @@ function drawTrend(chartBundle) {
 		var config = {
 			type: 'line',
 			data: {
-				labels: ['Jun', 'Feb', 'Web', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sec', 'Oct', 'Nov', "Dec"],
+				labels: chartBundle.x_labels,
 				datasets:chartBundle.datasets
 			},
 			options: {

@@ -37,32 +37,39 @@ var pie_bgColor_repos=[
 	'rgba(192, 57, 43,0.5)'
 ];
 function lang_rank() {
-	var j = {
-		"data": [{
-				"lang_name": "Java",
-				"repos_percent": "15",
-				"user_percent": "10"
-			},
-
-			{
-				"lang_name": "Python",
-				"repos_percent": "20",
-				"user_percent": "22"
-			}, {
-				"lang_name": "JavaScript",
-				"repos_percent": "8",
-				"user_percent": "7"
-			}
-		]
-	};
-//	var data_url='';
+//	var j = {
+//		"data": [{
+//				"lang_name": "Java",
+//				"repos_percent": "15",
+//				"user_percent": "10"
+//			},
+//
+//			{
+//				"lang_name": "Python",
+//				"repos_percent": "20",
+//				"user_percent": "22"
+//			}, {
+//				"lang_name": "JavaScript",
+//				"repos_percent": "8",
+//				"user_percent": "7"
+//			}
+//		]
+//	};
 //	$.getJSON(data_url,function(result){
 //		pack_data(result);
 //	});
-	pack_data(j);
+	$.ajax({
+		type:"GET",
+		url:"http://139.199.196.203/checkmysql.php?callback=?",
+		dataType:'JSONP',
+		success:function(data){
+			pack_lang_rank_data(data);
+			$('#loading-tip').modal('hide');
+		}
+	});
 }
 
-function pack_data(jsonItem) {
+function pack_lang_rank_data(jsonItem) {
 	var x_labels = new Array();
 	var user_dataset = new Array();
 	var repos_dataset = new Array();
@@ -72,17 +79,16 @@ function pack_data(jsonItem) {
 			case "data":
 				$.each(value, function(index) {
 					x_labels.push(value[index].lang_name);
-					user_dataset.push(value[index].user_percent);
-					repos_dataset.push(value[index].repos_percent);
+					user_dataset.push(value[index].user_percentage*100);
+					repos_dataset.push(value[index].rep_percentage*100);
 				});
 				var chartBunle = {
 					labels: x_labels,
 					user_data: user_dataset,
 					repos_data: repos_dataset
 				};
-				var chartType = $("#cb5").get(0).checked ? 'pie' : 'bar';
-				if(chartType == 'bar') drawBar(chartBunle);
-				else drawPie(chartBunle);
+				drawBar(chartBunle);
+				drawPie(chartBunle);
 				break;
 		}
 	});
@@ -121,7 +127,23 @@ function drawBar(chartBundle) {
 				},
 				title: {
 					display: true,
-					text: 'Github上各种语言的占比情况'
+					text: 'Github上各种语言的占比情况(柱状图)'
+				},
+				scales: {
+					xAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: '语言'
+						}
+					}],
+					yAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: '百分比%'
+						}
+					}]
 				}
 			}
 		};
@@ -158,7 +180,7 @@ function drawBar(chartBundle) {
 function drawPie(chartBundle)
 {
 	console.log('画饼图');
-	if(window.lang_rank_chart==null)
+	if(window.lang_rank_chart_pie==null)
 	{
 		var pieChartData={
 			labels:chartBundle.labels,
@@ -185,14 +207,14 @@ function drawPie(chartBundle)
 				},
 				title: {
 					display: true,
-					text: 'Github上各种语言的占比情况'
+					text: 'Github上各种语言的占比情况(饼图)'
 				}
         	}
 		};
 		
-		window.lang_rank_chart=new Chart(document.getElementById('myChart').getContext('2d'),config);
-		window.lang_rank_chart_config=config;
-		window.lang_rank_chart_dataset=pieChartData.datasets;
+		window.lang_rank_chart_pie=new Chart(document.getElementById('myChart-pie').getContext('2d'),config);
+		window.lang_rank_chart_pie_config=config;
+		window.lang_rank_chart_Pie_dataset=pieChartData.datasets;
 	}
 	else{
 		//更新数据
@@ -208,9 +230,9 @@ function drawPie(chartBundle)
 				backgroundColor:pie_bgColor_user
 			}
 			];
-		window.lang_rank_chart_config.type='pie';
-		window.lang_rank_chart_config.data.datasets=new_datasets;
-		window.lang_rank_chart_dataset=new_datasets;
-		window.lang_rank_chart.update();
+		window.lang_rank_chart_pie_config.type='pie';
+		window.lang_rank_chart_pie_config.data.datasets=new_datasets;
+		window.lang_rank_chart_pie_dataset=new_datasets;
+		window.lang_rank_chart_pie.update();
 	}
 }

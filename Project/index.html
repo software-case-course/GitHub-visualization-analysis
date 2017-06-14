@@ -188,12 +188,26 @@
        		margin-right: auto;
        		border: 1px solid gainsboro;
        	}
+       	#myChart-pie{
+       		margin-top: 30px;
+       		max-width: 600px;
+       		max-height: 600px;
+       		margin-left: auto;
+       		margin-right: auto;
+       	}
        	h1,h2,p{
        		margin-bottom: 40px;
        	}
        	p{
        		font-size: 18px;
        		line-height: 35px;
+       	}
+       	h3{
+       		font-size: 24px;
+       		padding-bottom: 15px;
+       		border-bottom: 1px solid gainsboro;
+       		margin-bottom: 40px;
+       		margin-top: 60px;
        	}
        </style>
 	</head>
@@ -255,9 +269,10 @@
 						下面的图例分别显示了占比情况以及排行。<br />
 					</p>
 					<h2>占比情况</h2>
-					<input class='tgl tgl-flip' id='cb5' type='checkbox' style="position: absolute;">
-    				<label class='tgl-btn' data-tg-off='柱状图' data-tg-on='饼图' for='cb5' style="position: absolute;font-family: '微软雅黑';"></label>
+					<h3>柱状图</h2>
 					<canvas id="myChart"></canvas>
+					<h3>饼图</h2>
+					<canvas id="myChart-pie"></canvas>
 				</div>
 				<div class="tab-pane fade" id="tab-geo-analysis">
 					<h1>地域分布</h1>
@@ -381,12 +396,7 @@
 				dropdown_menu.fadeOut(200);
 			});
 			//添加图表切换功能
-			$("#cb5").click(function(){
-//				get_lang_rank(0);
-				lang_rank();
-			})
 			drawMap();
-			pack_country_data();
 		});
 		
 		//一下函数添加导航栏的控制功能
@@ -397,6 +407,8 @@
 					case 0:$(item).click(function(){
 						console.log('语言排行')
 //						get_lang_rank(0);
+						var modal = $("#loading-tip");
+						modal.modal('show');
 						lang_rank();
 					});break;//语言排行
 					case 1:$(item).click(function(){
