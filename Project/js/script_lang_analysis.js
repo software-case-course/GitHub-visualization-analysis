@@ -96,7 +96,7 @@ function lang_analysis() {
 		adjust_data();
 		var radarChartData = {};
 		var datasets = new Array();
-		radarChartData.labels = ['用户数', '仓库数', '潜力', 'stars数', 'forks数'];
+		radarChartData.labels = ['用户数', '仓库数', '活跃度', 'stars数', 'forks数'];
 		$.each(lang_nameLabels, function(index, value) {
 			var item = {};
 			item.label = value;
