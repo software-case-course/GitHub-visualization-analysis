@@ -58,6 +58,7 @@ function lang_rank() {
 //	$.getJSON(data_url,function(result){
 //		pack_data(result);
 //	});
+	$("#loading-tip").modal('show');
 	$.ajax({
 		type:"GET",
 		url:"http://139.199.196.203/checkmysql.php?callback=?",

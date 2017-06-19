@@ -1,0 +1,154 @@
+body{
+       	background-color: #444444;
+       }
+       	#navbar-top{
+       		margin:0;
+/*       		margin-bottom: 20px;*/
+       		border-radius: 0;
+       		border: none;
+       		box-shadow: 0 0 10px #080808;
+       	}
+       	#main-panel{
+       		border-left: 1px solid gainsboro;
+       		border-right: 1px solid gainsboro;
+       		background-color: white;
+       		padding-left: 5%;
+       		padding-right: 5%;
+       		padding-top: 2%;
+       		padding-bottom: 2%;
+       	}
+       	/**设置标签页样式**/
+       	#navigation-group{
+       		border-bottom: none;
+       	}
+       	#navigation-group>li>div>a{
+       		background-color: #444444;
+       		height: 100%;
+       		padding: 15px;
+       		display: block;
+       		text-decoration: none;
+       		color: gainsboro;
+       		-webkit-transition: all .2s;
+       		-ms-transition: all .2s;
+       		-moz-transition: all .2s;
+       		transition: all .2s;
+       	}
+       	#navigation-group>li>div>a:hover{
+       		background-color: #333333;
+       	}
+       	#navigation-group>li.active>div>a{
+       		background-color: white;
+       		color: #444444;
+       	}
+       	/*设置内容物居中*/
+       	.align-center{
+       		display: table;
+       		width: auto;
+       		margin-left: auto;
+       		margin-right: auto;
+       	}
+       	/*给菜单按钮添加动画效果，应用在所有属性上，duration=0.2s*/
+       	.dropdown-toggle{
+       		padding: 15px;
+       		box-shadow: none;
+       		border: none;
+       		color: ghostwhite;
+       		background-color: #444444;
+       		-webkit-transition: all .2s;
+       		-ms-transition: all .2s;
+       	}
+       	/*鼠标覆盖时修改背景颜色*/
+       	.dropdown-toggle:hover{
+       		background-color: #333333;
+       		box-shadow: 0px -1px 5px #080808;
+       	}
+       	.dropdown-menu{
+       		display: none;
+       		top: 100%;
+       		left: 0px;
+       		float: left;
+       		z-index: 1000;
+       		padding: 0;
+       		margin: 0;
+       		border: none;
+       	}
+       	.dropdown-menu li{
+       		width: 100%;
+       	}
+       	.dropdown-menu li>a{
+       		padding: 15px;
+       	}
+       	/*添加动画效果，同上*/
+       	#lang-leaderboard,#geo-distribution,#lang-trend{
+       		-webkit-transition: all .2s;
+       		-ms-transition: all .2s;
+       	}
+       	#lang-leaderboard:hover,#geo-distribution:hover,#lang-trend:hover{
+       		background-color: gainsboro;
+       	}
+       	.canvas-style-bar{
+       		max-width: 1422px;
+       		max-height: 800px;
+       	}
+       	.canvas-style-pie{
+       		max-width: 750px;
+       		max-height: 750px;
+       	}
+       	.canvas-style-radar{
+       		max-width: 750px;
+       		max-height: 750px;
+       		margin-left: auto;
+       		margin-right: auto;
+       		width: auto;
+       	}
+       	.canvas-style-line{
+       		max-width: 1422px;
+       		max-height: 750px;
+       		width: auto;
+       		margin-left: auto;
+       		margin-right: auto;
+       	}
+       	.tab-indicator{
+       		transition: all .3s;
+       		width: 100%;
+       		position: absolute;
+       		left: 0px;
+       		top: 0px;
+       		height: 0px;
+       		background-color: #FF9500;
+       	}
+       	#navigation-group>li>div:hover .tab-indicator{
+       		height: 5px;
+       	}
+       	#navigation-group>li.active>div .tab-indicator{
+       		height: 5px;
+       	}
+       	#map-container{
+       		width: auto;
+       		max-width: 1422px;
+       		max-height: 750px;
+       		margin-left: auto;
+       		margin-right: auto;
+       		border: 1px solid gainsboro;
+       	}
+       	#myChart-pie{
+       		margin-top: 30px;
+       		max-width: 600px;
+       		max-height: 600px;
+       		margin-left: auto;
+       		margin-right: auto;
+       	}
+       	h1,h2,p{
+       		margin-bottom: 40px;
+       	}
+       	p{
+       		font-size: 18px;
+       		line-height: 35px;
+       	}
+       	h3{
+       		font-size: 24px;
+       		padding-bottom: 15px;
+       		border-bottom: 1px solid gainsboro;
+       		margin-bottom: 40px;
+       		margin-top: 60px;
+       	}

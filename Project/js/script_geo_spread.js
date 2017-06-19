@@ -959,8 +959,6 @@ latlong.ZW = {
 	'latitude': -20,
 	'longitude': 30
 };
-
-var lang_names = ['C/C++', 'Java', 'Python', 'JavaScript', 'PHP', 'Ruby', 'R', 'Html', 'CSS'];
 var color_arr = [
 	'rgba(26, 188, 156,1.0)',
 	'rgba(22, 160, 133,1.0)',
@@ -977,120 +975,134 @@ var color_arr = [
 	'rgba(231, 76, 60,1.0)',
 	'rgba(192, 57, 43,1.0)'
 ];
+function geo_spread(lang_name)
+{
+	$("#loading-tip").modal('show');
+	$.ajax({
+		type:"get",
+		url:"http://139.199.196.203/checkmysql3.php?callback=?",
+		dataType:'JSONP',
+		success:function(data){
+			pack_country_data(data,lang_name);
+			$("#loading-tip").modal('hide');
+		}
+	});
+}
+function pack_country_data(jsonItem,lang_name) {
+	var mapData=new Array();
+	$.each(jsonItem,function(index,item){
+		var mapItem={};
+		mapItem.code=item.code;
+		mapItem.name=item.name;
+		mapItem.value=parseFloat(item.value[lang_name]);
+		console.log(mapItem.value);
+		mapItem.color='#de4c4f';
+		mapData.push(mapItem);
+	});
+	
+	var max = -Infinity;
+	var min = Infinity;
+	mapData.forEach(function(itemOpt) {
+		if(itemOpt.value > max) {
+			max = itemOpt.value;
+		}
+		if(itemOpt.value < min) {
+			min = itemOpt.value;
+		}
+	});
 
-function pack_country_data() {
-	var data_url = '';
-	$.getJSON(data_url, function(result) {
-		var lang_color = color_arr[lang_names.indexOf(result.lang_name)];
-		var datasets = result.data;
-		$.each(datasets, function(key, item) {
-			item.color = lang_color;
-		});
-
-		var max = -Infinity;
-		var min = Infinity;
-		datasets.forEach(function(itemOpt) {
-			if(itemOpt.value > max) {
-				max = itemOpt.value;
+	option = {
+		backgroundColor: '#fff',
+		title: {
+			text: '世界部分发达及发展中国家语言分布情况',
+			subtext: 'From 猪屎秋',
+			left: 'center',
+			top: 'top',
+			textStyle: {
+				color: '#333333'
 			}
-			if(itemOpt.value < min) {
-				min = itemOpt.value;
+		},
+		tooltip: {
+			trigger: 'item',
+			formatter: function(params) {
+				var value = (params.value + '').split('.');
+				value = value[0].replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g, '$1,') +
+					'.' + value[1];
+				return params.seriesName + '<br/>' + params.name + ' : ' + value;
 			}
-		});
-
-		option = {
-			backgroundColor: '#fff',
-			title: {
-				text: 'World Population (2011)',
-				subtext: 'From Gapminder',
-				left: 'center',
-				top: 'top',
-				textStyle: {
-					color: '#333333'
+		},
+		visualMap: {
+			show: false,
+			min: 0,
+			max: max,
+			inRange: {
+				symbolSize: [6, 60]
+			}
+		},
+		geo: {
+			name: '语言分布情况（2017）',
+			type: 'map',
+			map: 'world',
+			roam: true,
+			label: {
+				emphasis: {
+					show: false
 				}
 			},
-			tooltip: {
-				trigger: 'item',
-				formatter: function(params) {
-					var value = (params.value + '').split('.');
-					value = value[0].replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g, '$1,') +
-						'.' + value[1];
-					return params.seriesName + '<br/>' + params.name + ' : ' + value;
-				}
-			},
-			visualMap: {
-				show: false,
-				min: 0,
-				max: max,
-				inRange: {
-					symbolSize: [6, 60]
-				}
-			},
-			geo: {
-				name: 'World Population (2010)',
-				type: 'map',
-				map: 'world',
-				roam: true,
-				label: {
-					emphasis: {
-						show: false
-					}
+			itemStyle: {
+				normal: {
+					areaColor: 'rgba(54, 162, 235,0.5)',
+					borderColor: 'rgba(54, 162, 235,1)'
 				},
-				itemStyle: {
-					normal: {
-						areaColor: 'rgba(54, 162, 235,0.5)',
-						borderColor: 'rgba(54, 162, 235,1)'
-					},
-					emphasis: {
-						areaColor: '#cfcfcf'
-					}
+				emphasis: {
+					areaColor: '#cfcfcf'
 				}
-			},
-			series: [{
-				type: 'scatter',
-				coordinateSystem: 'geo',
-				data: datasets.map(function(itemOpt) {
-					return {
-						name: itemOpt.name,
-						value: [
-							latlong[itemOpt.code].longitude,
-							latlong[itemOpt.code].latitude,
-							itemOpt.value
-						],
-						label: {
-							emphasis: {
-								position: 'right',
-								show: true
-							}
-						},
-						itemStyle: {
-							normal: {
-								color: itemOpt.color
-							}
+			}
+		},
+		series: [{
+			type: 'scatter',
+			coordinateSystem: 'geo',
+			data: mapData.map(function(itemOpt) {
+				return {
+					name: itemOpt.name,
+					value: [
+						latlong[itemOpt.code].longitude,
+						latlong[itemOpt.code].latitude,
+						itemOpt.value
+					],
+					label: {
+						emphasis: {
+							position: 'right',
+							show: true
 						}
-					};
-				})
-			}]
-		};
-		var mapWidth = $("div.tab-content").css('width');
-		mapWidth = parseFloat(mapWidth);
-		var mapHeight = mapWidth * 9 / 16;
-		mapWidth = mapWidth > parseFloat($("#map-container").css('max-width')) ? parseFloat($("#map-container").css('max-width')) : mapWidth;
-		mapHeight = mapHeight > parseFloat($("#map-container").css('max-height')) ? parseFloat($("#map-container").css('max-height')) : mapHeight;
+					},
+					itemStyle: {
+						normal: {
+							color: itemOpt.color
+						}
+					}
+				};
+			})
+		}]
+	};
+	var mapWidth = $("div.tab-content").css('width');
+	mapWidth = parseFloat(mapWidth);
+	var mapHeight = mapWidth * 9 / 16;
+	mapWidth = mapWidth > parseFloat($("#map-container").css('max-width')) ? parseFloat($("#map-container").css('max-width')) : mapWidth;
+	mapHeight = mapHeight > parseFloat($("#map-container").css('max-height')) ? parseFloat($("#map-container").css('max-height')) : mapHeight;
+	$("#map-container").css({
+		'width': mapWidth,
+		'height': mapHeight
+	});
+	var chart = echarts.init(document.getElementById('map-container'));
+	chart.setOption(option);
+	window.addEventListener('resize', function() {
+		var newWidth = $("#tab-geo-analysis").css('width');
+		var newHeight = parseFloat(newWidth) * 9 / 16;
 		$("#map-container").css({
-			'width': mapWidth,
-			'height': mapHeight
+			'width': newWidth,
+			'height': newHeight
 		});
-		var chart = echarts.init(document.getElementById('map-container'));
-		chart.setOption(option);
-		window.addEventListener('resize', function() {
-			var newWidth = $("#tab-geo-analysis").css('width');
-			var newHeight = parseFloat(newWidth) * 9 / 16;
-			$("#map-container").css({
-				'width': newWidth,
-				'height': newHeight
-			});
-			chart.resize();
-		});
+		chart.resize();
 	});
 }
