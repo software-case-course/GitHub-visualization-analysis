@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>学完就改掉你名字哈哈(runoob.com)</title>
+<script>
+function displayDate(){
+	document.getElementById("demo").innerHTML="nothing!";
+}
+function getdata() {
+    xmlhttp=new XMLHttpRequest();
+    xmlhttp.onreadystatechange=function () {
+        if(xmlhttp.readyState==4&&xmlhttp.status==200){
+            document.getElementById("demo").innerHTML=xmlhttp.responseText;
+        }
+    }
+    xmlhttp.open("GET","getText.php",true);
+    xmlhttp.send();
+}
+</script>
+</head>
+<body>
+
+
+<p id="demo">这是一个段落</p>
+
+<button type="button" onclick="getdata()">显示日期</button>
+
+<video width="1280" height="720" controls>
+<source src="RogueOne.mp4" type="video/mp4">
+</video>
+
+</body>
+</html>
