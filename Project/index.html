@@ -206,10 +206,6 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			/**
-			 * 初始化bmob组件
-			 */
-			Bmob.initialize("960affa50d4201a8b8e8602770aea54f", "d531e0227fadfbe2d9a20d7b590f1ed0");
-			/**
 			 * 对其他组件执行初始化工作
 			 */
 //			var margin_t=$("#main-panel").css("margin-top");
@@ -240,6 +236,8 @@
 			$("#selected_list2").change(function(){
 				lang_analysis($(this).children('option:selected').val());
 			});
+			
+			lang_analysis();
 		});
 		
 		//一下函数添加导航栏的控制功能
