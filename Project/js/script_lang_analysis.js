@@ -37,8 +37,19 @@ var lang_trendArr = new Array();
 var lang_starsNum = new Array();
 var lang_forksNum = new Array();
 
+function clearData()
+{
+	lang_nameLabels.splice(0,lang_nameLabels.length);
+	lang_usersNum.splice(0,lang_usersNum.length);
+	lang_reposNum.splice(0,lang_reposNum.length);
+	lang_trendArr.splice(0,lang_trendArr.length);
+	lang_starsNum.splice(0,lang_starsNum.length);
+	lang_forksNum.splice(0,lang_forksNum.length);
+}
+
 function lang_analysis() {
 	$("#loading-tip").modal('show');
+	clearData();
 	$.ajax({
 		type: "get",
 		url: "http://139.199.196.203/checkmysql.php?callback=?",
@@ -72,6 +83,7 @@ function lang_analysis() {
 					lang_trendArr.push(avg);
 				});
 				$(document).trigger('trend_data_loaded');
+				$(document).off('user_repos_data_loaded');
 			}
 		});
 	});
@@ -88,6 +100,7 @@ function lang_analysis() {
 					lang_forksNum.push(parseFloat(jsonItem[value].forks));
 				});
 				$(document).trigger('stars_forks_data_loaded');
+				$(document).off('trend_data_loaded');
 			}
 		});
 	});
@@ -114,6 +127,7 @@ function lang_analysis() {
 		}); //循环结束后数据就准备好了
 		radarChartData.datasets = datasets;
 		drawRadar(radarChartData);
+		$(document).off('stars_forks_data_loaded');
 		$("#loading-tip").modal('hide');
 	});
 }
