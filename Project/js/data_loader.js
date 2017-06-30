@@ -2110,129 +2110,162 @@ function drawMap() {
 }
 
 /*********************下面是语言分析的绘图函数************************/
-function drawRadar(chartBundle){
+function drawRadar(chartBundle) {
 	var color = Chart.helpers.color;
 	var config = {
-        type: 'radar',
-        data: {
-            labels: ['用户数','用户活跃度','平台相关性','上手难度','潜力'],
-            datasets: [{
-                label: "My First dataset",
-                backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
-                borderColor: window.chartColors.red,
-                pointBackgroundColor: window.chartColors.red,
-                data: [
-                    randomScalingFactor(), 
-                    randomScalingFactor(), 
-                    randomScalingFactor(), 
-                    randomScalingFactor(), 
-                    randomScalingFactor()
-                ]
-            }, {
-                label: "My Second dataset",
-                backgroundColor: color(window.chartColors.blue).alpha(0.2).rgbString(),
-                borderColor: window.chartColors.blue,
-                pointBackgroundColor: window.chartColors.blue,
-                data: [
-                    randomScalingFactor(), 
-                    randomScalingFactor(), 
-                    randomScalingFactor(), 
-                    randomScalingFactor(), 
-                    randomScalingFactor()
-                ]
-            },]
-        },
-        options: {
-            legend: {
-                position: 'top',
-            },
-            title: {
-                display: true,
-                text: 'Chart.js Radar Chart'
-            },
-            scale: {
-              ticks: {
-                beginAtZero: true
-              }
-            }
-        }
-    };
-    var chart=new Chart(document.getElementById('myChart-lang-analysis'),config);
+		type: 'radar',
+		data: {
+			labels: ['用户数', '用户活跃度', '平台相关性', '上手难度', '潜力'],
+			datasets: [{
+				label: "My First dataset",
+				backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
+				borderColor: window.chartColors.red,
+				pointBackgroundColor: window.chartColors.red,
+				data: [
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor()
+				]
+			}, {
+				label: "My Second dataset",
+				backgroundColor: color(window.chartColors.blue).alpha(0.2).rgbString(),
+				borderColor: window.chartColors.blue,
+				pointBackgroundColor: window.chartColors.blue,
+				data: [
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor()
+				]
+			}, ]
+		},
+		options: {
+			legend: {
+				position: 'top',
+			},
+			title: {
+				display: true,
+				text: 'Chart.js Radar Chart'
+			},
+			scale: {
+				ticks: {
+					beginAtZero: true
+				}
+			}
+		}
+	};
+	var chart = new Chart(document.getElementById('myChart-lang-analysis'), config);
 }
 
 /******************下面是语言趋势的绘图函数**********************/
-function drawLangTrend(chartBundle)
-{
+function drawLangTrend(chartBundle) {
 	var config = {
-            type: 'line',
-            data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
-                datasets: [{
-                    label: "My First dataset",
-                    backgroundColor: window.chartColors.red,
-                    borderColor: window.chartColors.red,
-                    data: [
-                        randomScalingFactor(), 
-                        randomScalingFactor(), 
-                        randomScalingFactor(), 
-                        randomScalingFactor(), 
-                        randomScalingFactor(), 
-                        randomScalingFactor(), 
-                        randomScalingFactor()
-                    ],
-                    fill: false,
-                }, {
-                    label: "My Second dataset",
-                    fill: false,
-                    backgroundColor: window.chartColors.blue,
-                    borderColor: window.chartColors.blue,
-                    data: [
-                        randomScalingFactor(), 
-                        randomScalingFactor(), 
-                        randomScalingFactor(), 
-                        randomScalingFactor(), 
-                        randomScalingFactor(), 
-                        randomScalingFactor(), 
-                        randomScalingFactor()
-                    ],
-                }]
-            },
-            options: {
-                responsive: true,
-                title:{
-                    display:true,
-                    text:'Chart.js Line Chart'
-                },
-                tooltips: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                hover: {
-                    mode: 'nearest',
-                    intersect: true
-                },
-                scales: {
-                    xAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Month'
-                        }
-                    }],
-                    yAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Value'
-                        }
-                    }]
-                }
-            }
-        };
-        var myChart=new Chart(document.getElementById('myChart-lang-trend'),config);
+		type: 'line',
+		data: {
+			labels: ["January", "February", "March", "April", "May", "June", "July"],
+			datasets: [{
+				label: "My First dataset",
+				backgroundColor: window.chartColors.red,
+				borderColor: window.chartColors.red,
+				data: [
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor()
+				],
+				fill: false,
+			}, {
+				label: "My Second dataset",
+				fill: false,
+				backgroundColor: window.chartColors.blue,
+				borderColor: window.chartColors.blue,
+				data: [
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor()
+				],
+			}]
+		},
+		options: {
+			responsive: true,
+			title: {
+				display: true,
+				text: 'Chart.js Line Chart'
+			},
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: 'Month'
+					}
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: 'Value'
+					}
+				}]
+			}
+		}
+	};
+	var myChart = new Chart(document.getElementById('myChart-lang-trend'), config);
 }
 /*****************下面是用户分析的绘图函数***************************/
-function drawLiveness(chartBundle)
-{
-	
+function drawLiveness(chartBundle) {
+	var color = Chart.helpers.color;
+	var ctx = document.getElementById('myChart-liveness-analysis');
+	var config = {
+		type: 'bar',
+		labels: ["January", "February", "March", "April", "May", "June", "July"],
+		datasets: [{
+			label: 'Dataset 1',
+			backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+			borderColor: window.chartColors.red,
+			borderWidth: 1,
+			data: [
+				randomScalingFactor(),
+				randomScalingFactor(),
+				randomScalingFactor(),
+				randomScalingFactor(),
+				randomScalingFactor(),
+				randomScalingFactor(),
+				randomScalingFactor()
+			]
+		}, {
+			label: 'Dataset 2',
+			backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+			borderColor: window.chartColors.blue,
+			borderWidth: 1,
+			data: [
+				randomScalingFactor(),
+				randomScalingFactor(),
+				randomScalingFactor(),
+				randomScalingFactor(),
+				randomScalingFactor(),
+				randomScalingFactor(),
+				randomScalingFactor()
+			]
+		}]
+	};
+	var myChart=new Chart(ctx,config);
 }
